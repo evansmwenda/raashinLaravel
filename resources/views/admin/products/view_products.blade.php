@@ -38,6 +38,7 @@
                   <th>Product Code</th>
                   <th>Product Color</th>
                   <th>Price</th>
+                  <th>Image</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -50,6 +51,11 @@
                   <td>{{$product->product_code}}</td>
                   <td>{{$product->product_color}}</td>
                   <td>{{$product->price}}</td>
+                  <td>
+                    @if(!empty($product->image))
+                      <img src="{{asset('images/backend_images/products/small/'.$product->image)}}" width="60px" height="60px">
+                    @endif
+                  </td>
                   <td class="center"><a href="{{url('/admin/edit-product/'.$product->id)}}" class="btn btn-primary btn-mini">Edit</a> | <a  href="{{url('/admin/delete-product/'.$product->id)}}" class="delcat btn btn-danger btn-mini delCat">Delete</a></td>
                 </tr>
                 @endforeach
