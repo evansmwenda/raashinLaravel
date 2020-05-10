@@ -63,8 +63,37 @@ class ProductsController extends Controller
     	return view('admin.products.add_product')->with(compact('categories_dropdown')); 
     }
 
-    public function viewProducts(Request $request){
-        return view('admin.products.view_products');
+    public function viewProducts(){
+        $products = product::get();
+        foreach($products as $key => $val){
+           $category_name = Category::where(['id' => $val->category_id])->first();
+           $products[$key]->category_name = $category_name->name;
+        }
+        return view('admin.products.view_products')->with(compact('products'));
 
+    }
+
+    public function editProduct(Request $request,$id=null){
+        if($request->isMethod('post')){
+            #form submitted
+            $data=$request->all();
+            Product::where(['id'=>$id])->update(['product_name'=>$data['product_name'],'product_code'=>$data['product_code'],'product_color'=>$data['product_color'],'description'=>$data['description'],'price'=>$data['price']]);
+
+            return redirect('/admin/view-products')->with('flash_message_success','Product updated Successfully');
+        }
+
+        $productDetails = Product::where(['id'=>$id])->first();
+
+
+        return view('admin.products.edit_product')->with(compact('productDetails'));
+    }
+    public function deleteProduct($id =null){
+        if(!empty($id)){
+            Product::where(['id'=>$id])->delete();
+
+            //delete the images in the images folder
+
+            return redirect()->back()->with('flash_message_success','Product deleted Successfully');
+        }
     }
 }
