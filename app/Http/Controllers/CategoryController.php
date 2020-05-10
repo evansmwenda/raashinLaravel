@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use Session;
 use Illuminate\Http\Request;
 use App\Category;
 
@@ -18,6 +20,7 @@ class CategoryController extends Controller
             $category->parent_id = $data['parent_id'];
     		$category->description = $data['description'];
     		$category->url = $data['url'];
+            $category->status =0;
     		$category->save();
     		return redirect('/admin/view-categories')->with('flash_message_success','Category added Successfully');
 
