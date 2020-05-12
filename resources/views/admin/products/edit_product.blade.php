@@ -16,6 +16,16 @@
           <div class="widget-content nopadding">
             <form class="form-horizontal" method="post" action="{{('/admin/edit-product/'.$productDetails->id)}}" name="edit_product" id="edit_product" novalidate="novalidate"> {{csrf_field() }}
               <div class="control-group">
+                <label class="control-label">Under Category</label>
+                <div class="controls">
+                  <select name="category_id" style="width:220px;">
+                    <?php echo $categories_dropdown; ?>
+                    <!-- {{ $categories_dropdown }} -->
+                    
+                  </select>
+                </div>
+              </div>
+              <div class="control-group">
                 <label class="control-label">Product Name</label>
                 <div class="controls">
                   <input type="text" name="product_name" id="product_name" value="{{$productDetails->product_name}}">
@@ -43,6 +53,12 @@
                 <label class="control-label">Price</label>
                 <div class="controls">
                   <input type="text" name="price" id="price" value="{{$productDetails->price}}">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Image</label>
+                <div class="controls">
+                  <input type="file" name="image" id="image">
                 </div>
               </div>
               <div class="form-actions">

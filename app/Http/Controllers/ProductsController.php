@@ -63,7 +63,7 @@ class ProductsController extends Controller
     }
 
     public function viewProducts(){
-        $products = product::get();
+        $products = Product::get();
         foreach($products as $key => $val){
            $category_name = Category::where(['id' => $val->category_id])->first();
            $products[$key]->category_name = $category_name->name;
@@ -76,15 +76,43 @@ class ProductsController extends Controller
         if($request->isMethod('post')){
             #form submitted
             $data=$request->all();
-            Product::where(['id'=>$id])->update(['product_name'=>$data['product_name'],'product_code'=>$data['product_code'],'product_color'=>$data['product_color'],'description'=>$data['description'],'price'=>$data['price']]);
+            Product::where(['id'=>$id])->update([
+                'product_name'=>$data['product_name'],
+                'product_code'=>$data['product_code'],'
+                product_color'=>$data['product_color'],
+                'description'=>$data['description'],
+                'price'=>$data['price'],
+                'category_id'=>$data['category_id']]);
 
             return redirect('/admin/view-products')->with('flash_message_success','Product updated Successfully');
         }
 
+
         $productDetails = Product::where(['id'=>$id])->first();
 
+        //get categories data
+        $categories = Category::where(['parent_id'=>0])->get();
+        $categories_dropdown = "<option value='' selected>Select</option>";
+        foreach ($categories as $cat) {
+            if($cat->id == $productDetails->category_id){
+                $selected = "selected";
+            }else{
+                $selected = "";
+            }
+            $categories_dropdown .= "<option value='".$cat->id."' ".$selected.">".$cat->name."</option>";
+            $sub_categories = Category::where(['parent_id'=>$cat->id])->get();
+            foreach ($sub_categories as $sub_cat) {
+                if($sub_cat->id == $productDetails->category_id){
+                    $selected = "selected";
+                }else{
+                    $selected = "";
+                }
+                $categories_dropdown .= "<option value='".$sub_cat->id."' ".$selected.">&nbsp;--&nbsp;".$sub_cat->name."</option>";
+            }
+        }
 
-        return view('admin.products.edit_product')->with(compact('productDetails'));
+
+        return view('admin.products.edit_product')->with(compact('productDetails','categories_dropdown'));
     }
     public function deleteProduct($id =null){
         if(!empty($id)){
