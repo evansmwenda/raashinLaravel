@@ -52,12 +52,26 @@
                   <td>{{$product->product_color}}</td>
                   <td>{{$product->price}}</td>
                   <td>
-                    @if(!empty($product->image))
+                    @if(!empty($product->image) && $product->image != NULL)
                       <img src="{{asset('images/backend_images/products/small/'.$product->image)}}" width="60px" height="60px">
                     @endif
                   </td>
-                  <td class="center"><a href="{{url('/admin/edit-product/'.$product->id)}}" class="btn btn-primary btn-mini">Edit</a> | <a  href="{{url('/admin/delete-product/'.$product->id)}}" class="delcat btn btn-danger btn-mini delCat">Delete</a></td>
+                  <td class="center"><a href="#myModal{{$product->id}}" data-toggle="modal" class="btn btn-success btn-mini">View</a> <a href="{{url('/admin/edit-product/'.$product->id)}}" class="btn btn-primary btn-mini">Edit</a> | <a  href="{{url('/admin/delete-product/'.$product->id)}}" class="delcat btn btn-danger btn-mini delCat">Delete</a></td>
                 </tr>
+                  <div id="myModal{{$product->id}}" class="modal hide">
+                    <div class="modal-header">
+                      <button data-dismiss="modal" class="close" type="button">×</button>
+                      <h3>{{$product->product_name}} Details</h3>
+                    </div>
+                    <div class="modal-body">
+                      <p>Product ID: {{$product->id}}</p>
+                      <p>Category ID: {{$product->category_id}}</p>
+                      <p>Product Code: {{$product->product_code}}</p>
+                      <p>Product Color: {{$product->product_color}}</p>
+                      <p>Product Price: {{$product->price}}</p>
+                      <p>Description: {{$product->id}}</p>
+                    </div>
+                  </div>
                 @endforeach
               </tbody>
             </table>
@@ -67,5 +81,7 @@
     </div>
   </div>
 </div>
+
+
 
 @endsection

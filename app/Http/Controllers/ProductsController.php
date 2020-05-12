@@ -7,7 +7,6 @@ use Session;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Category;
-use Illuminate\Support\Facades\Input;
 use Image;
 
 class ProductsController extends Controller
