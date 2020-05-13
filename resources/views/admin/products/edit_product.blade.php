@@ -6,6 +6,20 @@
     <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Products</a> <a href="#" class="current">Edit Product</a> </div>
     <h1>Products</h1>
       </div>
+
+       @if(Session::has("flash_message_error")) 
+        <div class="alert alert-error alert-block">
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <strong>{!! session('flash_message_error') !!}</strong>
+        </div> 
+    @endif 
+
+    @if(Session::has("flash_message_success")) 
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <strong>{!! session('flash_message_success') !!}</strong>
+        </div> 
+    @endif
   <div class="container-fluid"><hr>
     <div class="row-fluid">
       <div class="span12">
@@ -60,7 +74,7 @@
                 <div class="controls">
                   <input type="file" name="image" id="image">
                   <input type="hidden" name="current_image" value="{{ $productDetails->image }}">
-                  <img style="width: 50px;" src="{{ asset('/images/backend_images/products/small/'.$productDetails->image) }}">
+                  <img style="width: 50px;" src="{{ asset('/images/backend_images/products/small/'.$productDetails->image) }}"> | <a href="/admin/delete-product-image/{{ $productDetails->id }}">Delete</a>
                 </div>
               </div>
               <div class="form-actions">

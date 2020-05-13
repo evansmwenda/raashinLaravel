@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Category;
 use Image;
+use DB;
 
 class ProductsController extends Controller
 {
@@ -149,5 +150,28 @@ class ProductsController extends Controller
 
             return redirect()->back()->with('flash_message_success','Product deleted Successfully');
         }
+    }
+
+    public function deleteProductImage($id){
+        //attempt to delete image
+        $image = DB::table('products')->where('id', $id)->value('image');
+        if($image == NULL){
+            //no image here
+            return redirect()->back()->with('flash_message_error','Product Image not found');
+        }
+
+        //has image
+        $path = $_SERVER['DOCUMENT_ROOT'].'/images/backend_images/products/small/'.$image;
+        $path_medium = $_SERVER['DOCUMENT_ROOT'].'/images/backend_images/products/medium/'.$image;
+        $path_large = $_SERVER['DOCUMENT_ROOT'].'/images/backend_images/products/large/'.$image;
+        unlink($path);
+        unlink($path_medium);
+        unlink($path_large);
+
+        Product::where(['id'=>$id])->update(['image'=>'']);
+
+        
+        return redirect()->back()->with('flash_message_success','Product Image deleted Successfully');
+        //delete product image here
     }
 }
