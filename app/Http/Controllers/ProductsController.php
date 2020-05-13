@@ -76,12 +76,39 @@ class ProductsController extends Controller
         if($request->isMethod('post')){
             #form submitted
             $data=$request->all();
+
+            //upload the image
+            if($request->hasFile('image')){
+                $image_tmp = $request->file('image');
+                $extension = $image_tmp->getClientOriginalExtension();
+                $extension = $image_tmp->getClientOriginalExtension();
+                $filename = rand(111,99999).'.'.$extension;
+
+                $large_image_path  = 'images/backend_images/products/large/'.$filename;
+                $medium_image_path = 'images/backend_images/products/medium/'.$filename;
+                $small_image_path  = 'images/backend_images/products/small/'.$filename;
+
+                //Resize the images
+                Image::make($image_tmp)->save($large_image_path);
+                Image::make($image_tmp)->resize(600,600)->save($medium_image_path);
+                Image::make($image_tmp)->resize(300,300)->save($small_image_path);
+
+                
+            }else{
+                //has not updated image
+                $filename = $data['current_image'];
+            }
+
+
+
+
             Product::where(['id'=>$id])->update([
                 'product_name'=>$data['product_name'],
-                'product_code'=>$data['product_code'],'
-                product_color'=>$data['product_color'],
+                'product_code'=>$data['product_code'],
+                'product_color'=>$data['product_color'],
                 'description'=>$data['description'],
                 'price'=>$data['price'],
+                'image'=>$filename,
                 'category_id'=>$data['category_id']]);
 
             return redirect('/admin/view-products')->with('flash_message_success','Product updated Successfully');

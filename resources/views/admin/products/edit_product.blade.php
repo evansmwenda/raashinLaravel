@@ -14,7 +14,7 @@
             <h5>Edit Product</h5>
           </div>
           <div class="widget-content nopadding">
-            <form class="form-horizontal" method="post" action="{{('/admin/edit-product/'.$productDetails->id)}}" name="edit_product" id="edit_product" novalidate="novalidate"> {{csrf_field() }}
+            <form enctype="multipart/form-data" class="form-horizontal" method="post" action="{{('/admin/edit-product/'.$productDetails->id)}}" name="edit_product" id="edit_product" novalidate="novalidate"> {{csrf_field() }}
               <div class="control-group">
                 <label class="control-label">Under Category</label>
                 <div class="controls">
@@ -52,13 +52,15 @@
               <div class="control-group">
                 <label class="control-label">Price</label>
                 <div class="controls">
-                  <input type="text" name="price" id="price" value="{{$productDetails->price}}">
+                  <input type="text" name="price" id="price" value="{{ $productDetails->price }}">
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label">Image</label>
                 <div class="controls">
                   <input type="file" name="image" id="image">
+                  <input type="hidden" name="current_image" value="{{ $productDetails->image }}">
+                  <img style="width: 50px;" src="{{ asset('/images/backend_images/products/small/'.$productDetails->image) }}">
                 </div>
               </div>
               <div class="form-actions">
