@@ -174,4 +174,13 @@ class ProductsController extends Controller
         return redirect()->back()->with('flash_message_success','Product Image deleted Successfully');
         //delete product image here
     }
+
+    public function getTestApi(){
+        $data = [
+            "name" => "Evans Mwenda",
+            "email" => "evansmwenda@gmail.com",
+            "phone" => "999"
+        ];
+        return response()->json($data);
+    }
 }

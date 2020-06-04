@@ -1,0 +1,1 @@
+front_footer.blade.php
