@@ -14,7 +14,12 @@
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+
+//index page
 Route::get('/','IndexController@index');
+
+//admin login
 Route::match(['get','post'],'/admin','AdminController@login');
 
 
@@ -22,6 +27,9 @@ Route::match(['get','post'],'/admin','AdminController@login');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//products listing
+Route::get('/products/{url}','ProductsController@products');
 
 Route::group(['middleware' => ['auth']],function(){
 	Route::get('/admin/dashboard','AdminController@dashboard');

@@ -175,6 +175,20 @@ class ProductsController extends Controller
         //delete product image here
     }
 
+    public function products($url = null){
+        $categoryDetails = Category::where(['url'=>$url])->first();
+        // if($categoryDetails == null){
+        //     //invalid direction
+        //     return redirect()->back()->with('flash_message_error','An error occurred, please try again');
+        // }
+
+        $products = Product::where(['category_id' => $categoryDetails->id])->get();
+        $categories = Category::with('categories')->where(['parent_id'=>0])->get();
+
+        
+        return view('products.listing')->with(compact('categoryDetails','products','categories'));
+    }
+
     public function getTestApi(){
         $data = [
             "name" => "Evans Mwenda",
