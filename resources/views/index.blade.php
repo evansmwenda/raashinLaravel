@@ -90,7 +90,7 @@
 										<div class="panel-body">
 											<ul>
 												@foreach($cat->categories as $subcat)
-													<li><a href="#">{{ $subcat->name }} </a></li>
+												<li><a href="{{ url('/products/'.$subcat->url) }}">{{ $subcat->name }} </a></li>
 												@endforeach
 											</ul>
 										</div>
