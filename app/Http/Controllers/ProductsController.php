@@ -177,12 +177,23 @@ class ProductsController extends Controller
 
     public function products($url = null){
         $categoryDetails = Category::where(['url'=>$url])->first();
-        // if($categoryDetails == null){
-        //     //invalid direction
-        //     return redirect()->back()->with('flash_message_error','An error occurred, please try again');
-        // }
+        
+        if($categoryDetails->parent_id == 0){
+            //this is a main category
+            $subCategories = Category::where(['parent_id' => $categoryDetails->id])->get();
+            $cat_ids =$categoryDetails->id.",";//include products that dont have sub categories
+            foreach($subCategories as $subCat){
+                $cat_ids .= $subCat->id .",";
+            }
+            // echo $cat_ids;die();
+            $my_ids =explode(',',$cat_ids);//create array from string
+            $products = Product::whereIn('category_id',$my_ids)->get();
+        }else{
+            //this is a sub category
+            $products = Product::where(['category_id' => $categoryDetails->id])->get();
+        }
 
-        $products = Product::where(['category_id' => $categoryDetails->id])->get();
+        
         $categories = Category::with('categories')->where(['parent_id'=>0])->get();
 
         
