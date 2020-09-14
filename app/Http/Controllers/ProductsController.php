@@ -176,6 +176,14 @@ class ProductsController extends Controller
     }
 
     public function products($url = null){
+        //check if product url exists
+        $countCategory =  Category::where(['url'=>$url])->count();
+        // dd($countCategory);
+        if($countCategory == 0){
+            abort(404);
+        }
+
+        
         $categoryDetails = Category::where(['url'=>$url])->first();
         
         if($categoryDetails->parent_id == 0){
