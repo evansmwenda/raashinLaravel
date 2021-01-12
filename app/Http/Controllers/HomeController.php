@@ -25,4 +25,24 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function account(){
+        return view('home');
+    }
+
+    public function wishlist(){
+        return view('home');
+    }
+
+    public function checkout(){
+        return view('home');
+    }
+
+    public function cart(){
+        return view('home');
+    }
+    public function contactus(){
+        return view('home');
+    }
+
 }
