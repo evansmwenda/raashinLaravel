@@ -39,7 +39,13 @@ class CategoryController extends Controller
     	if($request->isMethod('post')){
     		#form submitted
     		$data=$request->all();
-    		Category::where(['id'=>$id])->update(['name'=>$data['category_name'],'description'=>$data['description'],'url'=>$data['url']]);
+			$category= Category::where(['id'=>$id])->first();
+			$category->name = $data['category_name'];
+    		$category->description = $data['description'];
+    		$category->url = $data['url'];
+			$category->save();
+
+    		// Category::where(['id'=>$id])->update(['name'=>$data['category_name'],'description'=>$data['description'],'url'=>$data['url']]);
 
     		return redirect('/admin/view-categories')->with('flash_message_success','Category updated Successfully');
     	}

@@ -112,10 +112,6 @@ class ProductsController extends Controller
             $product->image = $filename;
             $product->price = $data['price'];
             $product->save();
-
-
-
-
             // Product::where(['id'=>$id])->update([
             //     'product_name'=>$data['product_name'],
             //     'product_code'=>$data['product_code'],
