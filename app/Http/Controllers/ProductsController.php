@@ -100,17 +100,30 @@ class ProductsController extends Controller
                 $filename = $data['current_image'];
             }
 
+            //update the product here
+            $product = Product::where(['id'=>$id])->first();
+            // dd($product);
+            $product->category_id = $data['category_id'];
+            $product->product_name = $data['product_name'];
+            $product->product_code = $data['product_code'];
+            $product->product_color = $data['product_color'];
+            $product->description = $data['description'];
+            $product->price = $data['price'];
+            $product->image = $filename;
+            $product->price = $data['price'];
+            $product->save();
 
 
 
-            Product::where(['id'=>$id])->update([
-                'product_name'=>$data['product_name'],
-                'product_code'=>$data['product_code'],
-                'product_color'=>$data['product_color'],
-                'description'=>$data['description'],
-                'price'=>$data['price'],
-                'image'=>$filename,
-                'category_id'=>$data['category_id']]);
+
+            // Product::where(['id'=>$id])->update([
+            //     'product_name'=>$data['product_name'],
+            //     'product_code'=>$data['product_code'],
+            //     'product_color'=>$data['product_color'],
+            //     'description'=>$data['description'],
+            //     'price'=>$data['price'],
+            //     'image'=>$filename,
+            //     'category_id'=>$data['category_id']]);
 
             return redirect('/admin/view-products')->with('flash_message_success','Product updated Successfully');
         }

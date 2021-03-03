@@ -33,6 +33,8 @@ Route::get('/account', 'HomeController@account')->name('account');
 Route::get('/wish-list', 'HomeController@wishlist')->name('wishlist');
 Route::get('/checkout', 'HomeController@checkout')->name('checkout');
 Route::get('/cart', 'HomeController@cart')->name('cart');
+
+//remove out of authed controller
 Route::get('/contact-us', 'HomeController@contactus')->name('contactus');
 
 //products listing
