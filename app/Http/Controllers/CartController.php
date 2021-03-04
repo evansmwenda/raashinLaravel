@@ -17,8 +17,8 @@ class CartController extends Controller
     public function index()
     {
         //
-        $cart = Cart::where('user_id',\Auth::id())->get();
-        dd(count($cart));
+        $cart = Cart::with('cartItem')->where('user_id',\Auth::id())->get();
+        dd($cart);
 
     }
 
