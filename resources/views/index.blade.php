@@ -1,5 +1,18 @@
 @extends('layouts.frontLayout.front_design')
 @section('content')
+@if(Session::has("flash_message_error")) 
+            <div class="alert alert-error alert-block">
+                <button type="button" class="close" data-dismiss="alert">x</button>
+                <strong>{!! session('flash_message_error') !!}</strong>
+            </div> 
+          @endif 
+
+        @if(Session::has("flash_message_success")) 
+            <div class="alert progress-bar-success alert-block">
+                <button type="button" class="close" data-dismiss="alert">x</button>
+                <strong style="color:white;">{!! session('flash_message_success') !!}</strong>
+            </div> 
+        @endif
 
 <section id="slider"><!--slider-->
 		<div class="container">
@@ -140,16 +153,19 @@
 											<div class="productinfo text-center">
 												<img src="{{ asset('images/backend_images/products/small/'.$product->image) }}" alt="" />
 												<h2>KES {{ $product->price }}</h2>
-												<p>{{ $product->product_name }}</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+												<div style="height:50px;">
+													<p>{{ \Illuminate\Support\Str::limit($product->product_name,40,$end="...") }}</p>
+												</div>
+												
+												<a href="carts/create/{{$product->id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 											</div>
-											<div class="product-overlay">
+											<!-- <div class="product-overlay">
 												<div class="overlay-content">
 													<h2>KES {{ $product->price }}</h2>
 													<p>{{ $product->product_name }}</p>
 													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 												</div>
-											</div>
+											</div> -->
 									</div>
 									<div class="choose">
 										<ul class="nav nav-pills nav-justified">

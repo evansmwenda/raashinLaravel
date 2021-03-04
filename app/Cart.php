@@ -8,6 +8,10 @@ class Cart extends Model
 {
     //
     public $timestamps = true;
-    protected $table = 'cart';
+    protected $table = 'carts';
     public $fillable = ['id','user_id','created_at','updated_at'];
+
+    public function cartItems(){
+    	return $this->hasMany(CartItem::class);
+    }
 }

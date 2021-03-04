@@ -1,4 +1,5 @@
 <?php
+// use app\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,10 @@ Route::get('/contact-us', 'HomeController@contactus')->name('contactus');
 
 //products listing
 Route::get('/products/{url}','ProductsController@products');
+
+//resource controllers
+Route::get('carts/create/{id}','CartController@create');
+Route::resource('carts',CartController::class,['except' => 'create']);
 
 
 //admin prefixed routes

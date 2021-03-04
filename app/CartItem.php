@@ -10,4 +10,8 @@ class CartItem extends Model
     public $timestamps = true;
     protected $table = 'cart_items';
     public $fillable = ['id','cart_id','product_id','quantity','created_at','updated_at'];
+
+    public function cart(){
+    	return $this->belongsTo(Cart::class);
+    }
 }
